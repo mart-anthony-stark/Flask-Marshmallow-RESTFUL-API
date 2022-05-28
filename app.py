@@ -1,4 +1,5 @@
 from enum import unique
+import json
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
@@ -62,6 +63,11 @@ def get_all_products():
     result = products_schema.dump(all_products)
     return jsonify(result)
 
+# GET SINGLE PRODUCT
+@app.route('/product/<id>', methods=['GET'])
+def get_one_product(id):
+    product = Product.query.get(id)
+    return product_schema.jsonify(product)
 
 # Run server
 if __name__ == '__main__':
