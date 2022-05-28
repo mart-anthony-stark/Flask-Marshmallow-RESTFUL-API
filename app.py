@@ -1,6 +1,4 @@
-from email.policy import strict
 from enum import unique
-from pickle import FALSE
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
@@ -56,6 +54,14 @@ def add_product():
     db.session.commit()
 
     return product_schema.jsonify(new_product)
+
+# GET ALL PRODUCTS
+@app.route("/product", methods=['GET'])
+def get_all_products():
+    all_products = Product.query.all()
+    result = products_schema.dump(all_products)
+    return jsonify(result)
+
 
 # Run server
 if __name__ == '__main__':
