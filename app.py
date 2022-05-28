@@ -1,3 +1,4 @@
+from email.policy import strict
 from enum import unique
 from pickle import FALSE
 from flask import Flask, request, jsonify
@@ -38,8 +39,9 @@ class ProductSchema(ma.Schema):
     class Meta:
         fields = ('id', 'name', 'description', 'price', 'qty')
 
-
-
+# Init schema
+product_schema = ProductSchema(strict=True)
+products_schema = ProductSchema(many=True, strict=True)
 
 @app.route('/', methods=['GET'])
 def get():
